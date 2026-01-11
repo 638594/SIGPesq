@@ -31,6 +31,9 @@ public class Project {
     @Enumerated(EnumType.STRING)
     private Situacao situacao = Situacao.EM_ANDAMENTO;
 
+    @ManyToOne
+    @JoinColumn(name="coordenador_cpf", nullable = false)
+    private Participant coordenador;
 
     @PrePersist
     protected void onCreate() {

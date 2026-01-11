@@ -65,6 +65,7 @@ const AllProjects = () => {
                                 <th>DataInicio</th>
                                 <th>DataTermino</th>
                                 <th>Situacao</th>
+                                <th>coordenadorCpf</th>
                                 <th>Action</th>
                             </tr>
                         </thead>
@@ -77,6 +78,7 @@ const AllProjects = () => {
                                     <td>{project.dataInicio}</td>
                                     <td>{project.dataTermino}</td>
                                     <td>{project.situacao}</td>
+                                    <td>{project.coordenador?.cpf}</td>
                                     <td>
                                         <Button variant="outline-secondary" onClick={() => handleUpdate(project.codProjeto)}>Update</Button>
                                         <Button variant="outline-danger" onClick={() => handleDelete(project.codProjeto)}>Delete</Button>

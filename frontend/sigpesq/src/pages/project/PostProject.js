@@ -12,6 +12,7 @@ const PostProject = () => {
     titulo: "",
     descricao: "",
     dataTermino: "",
+    coordenadorCpf: ""
   });
 
   
@@ -30,13 +31,22 @@ const PostProject = () => {
     event.preventDefault();
     setErrorMsg(""); // Limpa erros anteriores ao tentar enviar
 
-    console.log(formData);
+    const projectToSave = {
+      codProjeto: formData.codProjeto,
+      titulo: formData.titulo,
+      descricao: formData.descricao,
+      dataTermino: formData.dataTermino,
+      coordenador: {
+        cpf:formData.coordenadorCpf
+      }
+    };
+    //console.log(formData);
 
     try {
       const response = await fetch("http://localhost:8080/api/projects", {
         method: "POST",
         headers: { "Content-type": "application/json" },
-        body: JSON.stringify(formData),
+        body: JSON.stringify(projectToSave),
       });
       // 1. Verificamos se a resposta é de sucesso (200 ou 201)
       if (response.ok) {
@@ -128,6 +138,21 @@ const PostProject = () => {
                 name="dataTermino"
                 min={today}
                 value={formData.dataTermino}
+                onChange={handleInputChange}
+              />
+            </FloatingLabel>
+          </Form.Group>
+
+          <Form.Group controlId="formCoordenadorCpf">
+            <FloatingLabel
+              controlId="floatingDate"
+              label="Cpf Coordenador"
+              className="mb-3"
+            >
+              <Form.Control
+                type="text"
+                name="coordenadorCpf"
+                value={formData.coordenadorCpf}
                 onChange={handleInputChange}
               />
             </FloatingLabel>
