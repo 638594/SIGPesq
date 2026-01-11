@@ -22,6 +22,10 @@ public class VinculoService {
     private final ParticipantRepository  participantRepository;
 
     public Vinculo postVinculo(Vinculo vinculo){
+        // Se o JSON vier errado, o vinculo.getProject() será null
+        if (vinculo.getProject() == null) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Objeto projeto não foi enviado corretamente no JSON");
+        }
         // 1. Validar se o Projeto existe
         Project projeto = projectRepository.findById(vinculo.getProject().getCodProjeto())
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Projeto nao encontrado."));

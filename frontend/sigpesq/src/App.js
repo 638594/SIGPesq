@@ -8,6 +8,7 @@ import UpdateProject from './pages/project/UpdateProject';
 import AllParticipants from './pages/participant/AllParticipants';
 import PostParticipant from './pages/participant/PostParticipant';
 import UpdateParticipant from './pages/participant/UpdateParticipant';
+import ProjectTeam from './pages/project/ProjectTeam';
 
 
 function App() {
@@ -18,6 +19,7 @@ function App() {
         <Route path='/projects' element={<AllProjects/>}/>
         <Route path='/project' element={<PostProject/>}/>
         <Route path='/projects/:codProjeto' element={<UpdateProject/>}/>
+        <Route path='/projects/:codProjeto/team' element={<ProjectTeam/>}/>
         <Route path='/participants' element={<AllParticipants/>}/>
         <Route path='/participant' element={<PostParticipant/>}/>
         <Route path='/participant/:cpf' element={<UpdateParticipant/>}/>

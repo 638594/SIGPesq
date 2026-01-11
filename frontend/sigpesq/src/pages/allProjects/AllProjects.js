@@ -28,7 +28,7 @@ const AllProjects = () => {
 
     const handleDelete = async (projectId) => {
         try {
-            const response = await fetch(`http://localhost:8080/api/projects/${projectId} `, {
+            const response = await fetch(`http://localhost:8080/api/projects/${projectId}`, {
                 method: "DELETE",
 
             });
@@ -80,6 +80,7 @@ const AllProjects = () => {
                                     <td>{project.situacao}</td>
                                     <td>{project.coordenador?.cpf}</td>
                                     <td>
+                                        <Button variant="outline-primary" onClick={()=> navigate(`/projects/${project.codProjeto}/team`)}>Equipe</Button>
                                         <Button variant="outline-secondary" onClick={() => handleUpdate(project.codProjeto)}>Update</Button>
                                         <Button variant="outline-danger" onClick={() => handleDelete(project.codProjeto)}>Delete</Button>
                                     </td>
