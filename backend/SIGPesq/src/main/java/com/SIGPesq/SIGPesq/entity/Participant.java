@@ -2,11 +2,11 @@ package com.SIGPesq.SIGPesq.entity;
 
 
 import com.SIGPesq.SIGPesq.enums.Tipos;
-import jakarta.persistence.Entity;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
-import jakarta.persistence.Id;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import jakarta.persistence.*;
 import lombok.Data;
+
+import java.util.List;
 
 @Entity
 @Data
@@ -22,5 +22,11 @@ public class Participant {
 
     @Enumerated(EnumType.STRING)
     private Tipos tipo;
+
+    @OneToMany(mappedBy = "participant", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonIgnore
+    private List<Vinculo> vinculos;
+
+
 
 }

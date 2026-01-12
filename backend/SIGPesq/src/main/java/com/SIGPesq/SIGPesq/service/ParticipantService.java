@@ -7,6 +7,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -31,5 +32,20 @@ public class ParticipantService {
 
     public Participant getParticipantById(String cpf){
         return participantRepository.findById(cpf).orElse(null);
+    }
+
+    public Participant updateParticipant(String cpf, Participant participant){
+        Optional<Participant> optionalParticipant = participantRepository.findById(cpf);
+        if(optionalParticipant.isPresent()){
+            Participant existingParticipant = optionalParticipant.get();
+
+            existingParticipant.setEmail(participant.getEmail());
+            existingParticipant.setNome(participant.getNome());
+
+            return participantRepository.save(existingParticipant);
+
+        }
+
+        return null;
     }
 }

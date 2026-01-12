@@ -1,11 +1,13 @@
 import { useEffect, useState } from "react";
 import "./UpdateParticipant.css"
 import { Button, FloatingLabel, Form } from "react-bootstrap";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 
 const UpdateParticipant = () => {
 
     const {cpf} = useParams();
+
+    const navigate = useNavigate();
 
     const [formData, setFormData] = useState({
         nome: "",
@@ -34,11 +36,30 @@ const UpdateParticipant = () => {
         fetchParticipant();
     }, [cpf])
 
+    const handleSubmit = async (e) =>{
+        e.preventDefault();
+        try {
+            const response = await fetch(`http://localhost:8080/api/participants/${cpf}`,{
+                method: "PATCH",
+                headers:{"Content-Type": "application/json"},
+                body: JSON.stringify(formData),
+            });
+
+            const data = await response.json();
+            console.log("Participante Editado com Sucesso: ", data);
+
+            navigate(`/participants`)
+
+        } catch (error) {
+            console.error("Erro ao editar participante:", error.message);
+        }
+    }
+
     return (
          <>
             <div className="center-form">
                 <h1>Edit Participant</h1>
-                <Form >
+                <Form onSubmit={handleSubmit}>
                     <Form.Group controlId="formNome">
                         <FloatingLabel
                             controlId="floatingNome"
@@ -67,6 +88,17 @@ const UpdateParticipant = () => {
                                 placeholder="Digite a email do participante"
                                 value={formData.email}
                                 onChange={handleInputChange}
+                            />
+                        </FloatingLabel>
+                    </Form.Group>
+
+                    <Form.Group controlId="formTipo">
+                        <FloatingLabel controlId="floatingTipo" label="Tipo participante" className="mb-3">
+                            <Form.Control
+                                type="text"
+                                value={formData.tipo}
+                                disabled
+                                readOnly
                             />
                         </FloatingLabel>
                     </Form.Group>
