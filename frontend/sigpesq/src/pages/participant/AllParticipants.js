@@ -1,12 +1,12 @@
 import { useEffect, useState } from "react";
-import { Button, Col, Container, Row, Table } from "react-bootstrap";
+import { Alert, Button, Col, Container, Row, Table } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 
 
 const AllParticipants = () => {
 
     const [participants, setParticipants] = useState([]);
-
+    const [errorMsg, setErrorMsg] = useState("");
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -26,6 +26,7 @@ const AllParticipants = () => {
     }, []);
 
     const handleDelete = async (participantCpf) => {
+        setErrorMsg("");
         try {
             const response = await fetch(`http://localhost:8080/api/participants/${participantCpf}`,{
                  method:"DELETE",
@@ -34,11 +35,17 @@ const AllParticipants = () => {
             if(response.ok){
                 setParticipants((prevParticipant) =>
                     prevParticipant.filter((participant) => participant.cpf !== participantCpf)
-                )
+                );
+                console.log(`Participant com cpf ${participantCpf} deletado com sucesso.`);
+            }else if(response.status === 500){
+                setErrorMsg("Não é possível excluir este participante porque ele está vinculado a uma equipe de projeto.");
+            }else{
+                setErrorMsg("Ocorreu um erro ao tentar excluir o participante.");
             }
 
-            console.log(`Participant com cpf ${participantCpf} deletado com sucesso.`);
+            
         } catch (error) {
+            setErrorMsg("Erro de conexão com o servidor.")
             console.error("Error ao deletar participant:", error.message);
         }
     }
@@ -53,6 +60,12 @@ const AllParticipants = () => {
                 <Row>
                     <Col>
                         <h1 className="text-center">Participants</h1>
+                        {/* 3. Exibição do Alerta caso exista uma mensagem de erro */}
+                    {errorMsg && (
+                        <Alert variant="danger" onClose={() => setErrorMsg("")} dismissible>
+                            {errorMsg}
+                        </Alert>
+                    )}
                         <Table>
                             <thead>
                                 <tr>
