@@ -1,6 +1,5 @@
 package com.SIGPesq.SIGPesq.entity;
 
-import com.SIGPesq.SIGPesq.enums.Situacao;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
@@ -10,38 +9,27 @@ import lombok.NoArgsConstructor;
 import java.time.LocalDate;
 import java.util.List;
 
-
 @Entity
 @Data
-@Table(name = "projetos")
 @NoArgsConstructor
-public class Project {
-
+public class Financiamento {
 
     @Id
-    private String codProjeto;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
-    private String titulo;
+    private String agenciaFinanciadora;
 
-    private String descricao;
+    private String tipoFomento;
+
+    private Long valorTotal;
 
     private LocalDate dataInicio;
 
     @JsonFormat(pattern = "yyyy-MM-dd")
     private LocalDate dataTermino;
 
-    @Enumerated(EnumType.STRING)
-    private Situacao situacao = Situacao.EM_ANDAMENTO;
-
-    @ManyToOne
-    @JoinColumn(name="coordenador_cpf", nullable = false)
-    private Participant coordenador;
-
-    @OneToMany(mappedBy = "project", cascade = CascadeType.ALL, orphanRemoval = true)
-    @JsonIgnore
-    private List<Vinculo> vinculos;
-
-    @OneToMany(mappedBy = "project", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "financiamento", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonIgnore
     private List<VinculoFinanciamento> vinculoFinanciamentos;
 

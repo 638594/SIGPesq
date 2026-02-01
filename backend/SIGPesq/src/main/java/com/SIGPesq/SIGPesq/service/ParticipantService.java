@@ -11,7 +11,7 @@ import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
-public class ParticipantService {
+public class  ParticipantService {
 
     private final ParticipantRepository participantRepository;
 

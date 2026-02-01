@@ -5,12 +5,13 @@ import com.SIGPesq.SIGPesq.enums.Tipos;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.util.List;
 
 @Entity
 @Data
-
+@NoArgsConstructor
 public class Participant {
 
     @Id
