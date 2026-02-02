@@ -1,5 +1,6 @@
 package com.SIGPesq.SIGPesq.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -27,9 +28,10 @@ public class VinculoFinanciamento {
 
     private LocalDate dataVinculacao;
 
+    @PrePersist
     protected void onCreate() {
-        if (this.dataVinculacao == null) {
+
             this.dataVinculacao = LocalDate.now();
-        }
+
     }
 }

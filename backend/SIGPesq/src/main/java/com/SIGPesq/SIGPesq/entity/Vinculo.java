@@ -1,5 +1,6 @@
 package com.SIGPesq.SIGPesq.entity;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -28,6 +29,7 @@ public class Vinculo {
 
     private LocalDate dataEntrada;
 
+    @JsonFormat(pattern = "yyyy-MM-dd")
     private LocalDate dataSaida;
 
     protected void onCreate(){
