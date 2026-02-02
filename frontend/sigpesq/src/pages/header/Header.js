@@ -35,6 +35,12 @@ const Header = () => {
                 <NavLink as={Link} to="/project" className="nav-link">
                   Post Projects
                 </NavLink>
+                <NavLink as={Link} to="/financiamentos" className="nav-link">
+                  Financiamentos
+                </NavLink>
+                <NavLink as={Link} to="/financiamento" className="nav-link">
+                  Post Financiamentos
+                </NavLink>
               </>
             )}
 
