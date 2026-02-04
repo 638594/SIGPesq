@@ -10,6 +10,7 @@ import { useNavigate } from "react-router-dom"
         const [formData, setFormData] = useState({
             // definir os campos do formulário aqui
             agenciaFinanciadora: "",
+            tipoFomento: "",
             valorTotal: "",
             dataTermino: ""
         })
@@ -30,6 +31,7 @@ import { useNavigate } from "react-router-dom"
 
            const financiamentoToSave = {
             agenciaFinanciadora: formData.agenciaFinanciadora,
+            tipoFomento: formData.tipoFomento,
             valorTotal: formData.valorTotal,
             dataTermino: formData.dataTermino
            };
@@ -78,6 +80,22 @@ import { useNavigate } from "react-router-dom"
                             name="agenciaFinanciadora"
                             placeholder="Digite a agencia financiadora"
                             value={formData.agenciaFinanciadora}
+                            onChange={handleInputChange}
+                        />
+                    </FloatingLabel>
+                </Form.Group>
+
+                <Form.Group>
+                    <FloatingLabel
+                        controlId="floatingTipoFomento"
+                        label="Tipo de Fomento"
+                        className="mb-3"
+                    >
+                        <Form.Control
+                            type="text"
+                            name="tipoFomento"
+                            placeholder="Digite o tipo de fomento"
+                            value={formData.tipoFomento}
                             onChange={handleInputChange}
                         />
                     </FloatingLabel>
