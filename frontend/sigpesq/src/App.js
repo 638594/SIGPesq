@@ -11,6 +11,7 @@ import ProjectTeam from './pages/project/ProjectTeam';
 import PostFinanciamento from './pages/financiamento/PostFinanciamento';
 import AllProjects from './pages/project/AllProjects';
 import AllFinanciamentos from './pages/financiamento/AllFinanciamentos';
+import SearchProducaoCientificaByAnoPublicacao from './pages/producaoCientifica/SearchProducaoCientificaByAnoPublicacao';
 
 
 function App() {
@@ -18,6 +19,7 @@ function App() {
     <>
       <Header/>
       <Routes>
+        <Route path='/producoes/consulta-ano' element={<SearchProducaoCientificaByAnoPublicacao/>}/>
         <Route path='/financiamento' element={<PostFinanciamento/>}/>
         <Route path='/financiamentos' element={<AllFinanciamentos/>}/>
         <Route path='/projects' element={<AllProjects/>}/>

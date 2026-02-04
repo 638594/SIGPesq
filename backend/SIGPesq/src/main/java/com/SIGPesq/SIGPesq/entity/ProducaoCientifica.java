@@ -17,6 +17,7 @@ public class ProducaoCientifica {
 
     private String tipoProducao;
 
+    @Column(name = "ano_publicacao")
     private Long anoPublicacao;
 
     private String meioDivulgacao;

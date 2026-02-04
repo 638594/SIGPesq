@@ -26,7 +26,10 @@ public class FinanciamentoController {
     }
 
     @GetMapping
-    public List<Financiamento> getFinanciamentos(){
+    public List<Financiamento> getFinanciamentos(@RequestParam(required = false) String agencia){
+        if(agencia != null && !agencia.isEmpty()){
+            return financiamentoService.buscarPorAgencia(agencia);
+        }
         return financiamentoService.getAllFinanciamentos();
     }
 
@@ -59,4 +62,6 @@ public class FinanciamentoController {
         }
         return ResponseEntity.ok(updatedFinanciamento);
     }
+
+
 }

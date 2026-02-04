@@ -1,27 +1,39 @@
 import { useEffect, useState } from "react";
-import { Button, Col, Container, Row, Table } from "react-bootstrap";
+import { Button, Col, Container, Form, InputGroup, Row, Table } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 
 
     const AllFinanciamentos = () => {
 
+        const [searchTerm, setSearchTerm] = useState("");   
         const[financiamentos, setFinanciamentos] = useState([]);
         const navigate = useNavigate();
 
-        useEffect(() => { 
-            const fetchFinanciamentos = async () => {
-                try {
-                    const response = await fetch("http://localhost:8080/api/financiamentos");
-                    const data = await response.json();
+      // Função que faz a chamada para a API com ou sem filtro
+    const fetchFinanciamentos = async (query = "") => {
+        try {
+            // Se houver query, passamos como parâmetro na URL
+            const url = query 
+                ? `http://localhost:8080/api/financiamentos?agencia=${query}`
+                : "http://localhost:8080/api/financiamentos";
+                
+            const response = await fetch(url);
+            const data = await response.json();
+            setFinanciamentos(data);
+        } catch (error) {
+            console.error("Erro ao buscar financiamentos: ", error.message);
+        }
+    };
 
-                    setFinanciamentos(data);
-                } catch (error) {
-                    console.error("Erro ao buscar financiamentos: ", error.message);
-                }
-            }
+    // useEffect que escuta as mudanças no searchTerm
+    useEffect(() => {
+        // Debounce: espera 500ms após o usuário parar de digitar para chamar o banco
+        const delayDebounce = setTimeout(() => {
+            fetchFinanciamentos(searchTerm);
+        }, 500);
 
-            fetchFinanciamentos();
-        }, []);
+        return () => clearTimeout(delayDebounce);
+    }, [searchTerm]);
 
         const handleDelete = async (financiamentoId) => {
             try {
@@ -46,11 +58,22 @@ import { useNavigate } from "react-router-dom";
             navigate(`/financiamentos/${financiamentoId}`);
         }
 
+     
+
         return (
             <Container>
                 <Row>
                     <Col>
                         <h1 className="text-center mt-5">Financiamentos</h1>
+                        {/* 3. Barra de Pesquisa */}
+                        <InputGroup className="mb-4 mt-4">
+                            <InputGroup.Text>🔍</InputGroup.Text>
+                            <Form.Control
+                                placeholder="Buscar por Agencia Financiadora (Ex: CNPq)"
+                                value={searchTerm}
+                                onChange={(e)=>setSearchTerm(e.target.value)}
+                            />
+                        </InputGroup>   
                         <Table striped bordered hover responsive>
                             <thead>
                                 <tr>
@@ -64,6 +87,7 @@ import { useNavigate } from "react-router-dom";
                                 </tr>
                             </thead>
                             <tbody>
+                                
                                 {financiamentos.map((financiamento) => (
                                     <tr key={financiamento.id}>
                                         <td>{financiamento.id}</td>

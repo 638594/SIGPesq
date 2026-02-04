@@ -24,10 +24,10 @@ public class ProducaoCientificaController {
         return producaoCientificaService.postProducaoCientifica(producaoCientifica);
     }
 
-    @GetMapping
-    public List<ProducaoCientifica> getAllProducoes(){
-        return producaoCientificaService.getAllProducoesCientifica();
-    }
+//    @GetMapping
+//    public List<ProducaoCientifica> getAllProducoes(){
+//        return producaoCientificaService.getAllProducoesCientifica();
+//    }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<?> deleteProducaoCientifica(@PathVariable Long id){
@@ -57,5 +57,13 @@ public class ProducaoCientificaController {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
         }
         return ResponseEntity.ok(updatedProducaoCientifica);
+    }
+
+    @GetMapping
+    public List<ProducaoCientifica> list(@RequestParam Long anoPublicacao){
+        if(anoPublicacao != null){
+            return producaoCientificaService.getByAnoPublicacao(anoPublicacao);
+        }
+        return producaoCientificaService.getAllProducoesCientifica();
     }
 }

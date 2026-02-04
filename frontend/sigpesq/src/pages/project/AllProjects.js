@@ -1,29 +1,36 @@
 import { useEffect, useState } from "react"
-import { Button, Col, Container, Row, Table } from "react-bootstrap";
+import { Button, Col, Container, FormControl, InputGroup, Row, Table } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 
 
 const AllProjects = () => {
 
+    const [searchTerm, setSearchTerm] = useState("");   
     const [projects, setProjects] = useState([]);
     const navigate = useNavigate();
 
-    useEffect(() => {
-        const fetchProjects = async () => {
-            try {
-                const response = await fetch("http://localhost:8080/api/projects");
-                const data = await response.json();
 
-                setProjects(data);
-            } catch (error) {
-                console.error("Error fetching projects", error.message);
-            }
+    const fetchProjects = async (query = "") => {
+        try {
+            const url = query
+                ? `http://localhost:8080/api/projects?termo=${encodeURIComponent(query)}`
+                : "http://localhost:8080/api/projects";
+            const response = await fetch(url);
+            const data = await response.json();
+            setProjects(data);
+        } catch (error) {
+            console.error("Erro ao buscar projetos: ", error.message);
         }
+    }
+    useEffect(() => {
+       
+        const delayDebounce = setTimeout(() => {
+            fetchProjects(searchTerm);
+        }, 500);
 
+        return () => clearTimeout(delayDebounce);
 
-        fetchProjects();
-
-    }, []);
+    }, [searchTerm]);
 
 
     const handleDelete = async (projectId) => {
@@ -51,11 +58,25 @@ const AllProjects = () => {
         navigate(`/projects/${projectId}`);
     }
 
+
+  
+
     return (
         <Container className="mt-5">
             <Row>
                 <Col>
                     <h1 className="text-center">Projects</h1>
+
+                    {/*Barra de pesquisa */}
+                    <InputGroup>
+                        <InputGroup.Text id="basic-addon1">🔍</InputGroup.Text>
+                        <FormControl
+                            placeholder="Buscar por titulo do projeto ou nome do coordenador"
+                            arial-label="Search"
+                            value={searchTerm}
+                            onChange={(e) => setSearchTerm(e.target.value)}
+                        />
+                    </InputGroup>
                     <Table striped bordered hover responsive>
                         <thead>
                             <tr>
@@ -65,7 +86,6 @@ const AllProjects = () => {
                                 <th>DataInicio</th>
                                 <th>DataTermino</th>
                                 <th>Situacao</th>
-                                <th>coordenadorCpf</th>
                                 <th>Action</th>
                             </tr>
                         </thead>
@@ -78,7 +98,6 @@ const AllProjects = () => {
                                     <td>{project.dataInicio}</td>
                                     <td>{project.dataTermino}</td>
                                     <td>{project.situacao}</td>
-                                    <td>{project.coordenador?.cpf}</td>
                                     <td>
                                         <Button variant="outline-primary" onClick={()=> navigate(`/projects/${project.codProjeto}/team`)}>Equipe</Button>
                                         <Button variant="outline-secondary" onClick={() => handleUpdate(project.codProjeto)}>Update</Button>

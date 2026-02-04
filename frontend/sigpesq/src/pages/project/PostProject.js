@@ -6,16 +6,14 @@ import { useNavigate } from "react-router-dom";
 const PostProject = () => {
   // Estado para armazenar a mensagem de erro do servidor
   const [errorMsg, setErrorMsg] = useState("");
-  
+
   const [formData, setFormData] = useState({
     codProjeto: "",
     titulo: "",
     descricao: "",
     dataTermino: "",
-    coordenadorCpf: ""
+    coordenadorCpf: "",
   });
-
-  
 
   const handleInputChange = (event) => {
     const { name, value } = event.target;
@@ -36,18 +34,18 @@ const PostProject = () => {
       titulo: formData.titulo,
       descricao: formData.descricao,
       dataTermino: formData.dataTermino,
-      coordenador: {
-        cpf:formData.coordenadorCpf
-      }
     };
     //console.log(formData);
 
     try {
-      const response = await fetch("http://localhost:8080/api/projects", {
-        method: "POST",
-        headers: { "Content-type": "application/json" },
-        body: JSON.stringify(projectToSave),
-      });
+      const response = await fetch(
+        `http://localhost:8080/api/projects?coordenador_cpf=${formData.coordenadorCpf}`,
+        {
+          method: "POST",
+          headers: { "Content-type": "application/json" },
+          body: JSON.stringify(projectToSave),
+        },
+      );
       // 1. Verificamos se a resposta é de sucesso (200 ou 201)
       if (response.ok) {
         const data = await response.json();
@@ -57,7 +55,7 @@ const PostProject = () => {
         // 2. Se a resposta for erro (ex: 400), pegamos a mensagem do Java
         const errorData = await response.json();
         setErrorMsg(
-          errorData.message || "Error ao criar projeto. Codigo ja existente."
+          errorData.message || "Error ao criar projeto. Codigo ja existente.",
         );
       }
     } catch (error) {
@@ -71,7 +69,7 @@ const PostProject = () => {
   return (
     <>
       <div className="center-form">
-        <h1>Post New Project</h1>
+        <h1>Criar Novo Projeto</h1>
         {/* Exibe o alerta de erro se houver uma mensagem */}
         {errorMsg && (
           <Alert variant="danger" onClose={() => setErrorMsg("")} dismissible>
@@ -144,16 +142,14 @@ const PostProject = () => {
           </Form.Group>
 
           <Form.Group controlId="formCoordenadorCpf">
-            <FloatingLabel
-              controlId="floatingDate"
-              label="Cpf Coordenador"
-              className="mb-3"
-            >
+            <FloatingLabel label="CPF do Coordenador" className="mb-3">
               <Form.Control
                 type="text"
                 name="coordenadorCpf"
+                placeholder="Digite o CPF do coordenador"
                 value={formData.coordenadorCpf}
                 onChange={handleInputChange}
+                required // Torna o campo obrigatório no frontend
               />
             </FloatingLabel>
           </Form.Group>

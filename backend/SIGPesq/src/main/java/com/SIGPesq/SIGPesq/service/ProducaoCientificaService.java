@@ -4,8 +4,11 @@ import com.SIGPesq.SIGPesq.entity.ProducaoCientifica;
 import com.SIGPesq.SIGPesq.repository.ProducaoCientificaRepository;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
@@ -14,6 +17,14 @@ import java.util.Optional;
 public class ProducaoCientificaService {
 
     private final ProducaoCientificaRepository producaoCientificaRepository;
+
+    public List<ProducaoCientifica> getByAnoPublicacao(Long anoPublicacao) {
+        if(anoPublicacao == null || anoPublicacao < 1900){
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Ano de busca invalido.");
+        }
+
+        return producaoCientificaRepository.findByAnoPublicacao(anoPublicacao);
+    }
 
     public ProducaoCientifica postProducaoCientifica(ProducaoCientifica producaoCientifica) {
         return producaoCientificaRepository.save(producaoCientifica);

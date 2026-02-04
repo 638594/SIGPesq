@@ -3,6 +3,7 @@ package com.SIGPesq.SIGPesq.entity;
 import com.SIGPesq.SIGPesq.enums.Situacao;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -33,12 +34,12 @@ public class Project {
     @Enumerated(EnumType.STRING)
     private Situacao situacao = Situacao.EM_ANDAMENTO;
 
-    @ManyToOne
-    @JoinColumn(name="coordenador_cpf", nullable = false)
-    private Participant coordenador;
+//    @ManyToOne
+//    @JoinColumn(name="coordenador_cpf", nullable = false)
+//    private Participant coordenador;
 
     @OneToMany(mappedBy = "project", cascade = CascadeType.ALL, orphanRemoval = true)
-    @JsonIgnore
+    @JsonManagedReference
     private List<Vinculo> vinculos;
 
     @OneToMany(mappedBy = "project", cascade = CascadeType.ALL, orphanRemoval = true)

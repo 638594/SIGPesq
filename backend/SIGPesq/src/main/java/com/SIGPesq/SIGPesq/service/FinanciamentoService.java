@@ -54,5 +54,9 @@ public class FinanciamentoService {
         }
         return null;
     }
+
+    public List<Financiamento> buscarPorAgencia(String agencia){
+        return financiamentoRepository.findByAgenciaFinanciadoraContainingIgnoreCase(agencia);
+    }
 }
 

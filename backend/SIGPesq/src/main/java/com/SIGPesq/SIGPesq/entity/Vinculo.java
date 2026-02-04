@@ -1,5 +1,6 @@
 package com.SIGPesq.SIGPesq.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.*;
 import lombok.Data;
@@ -19,6 +20,7 @@ public class Vinculo {
 
     @ManyToOne
     @JoinColumn(name = "projeto_id", nullable = false)
+    @JsonBackReference
     private Project project;
 
     @ManyToOne
@@ -32,6 +34,7 @@ public class Vinculo {
     @JsonFormat(pattern = "yyyy-MM-dd")
     private LocalDate dataSaida;
 
+    @PrePersist
     protected void onCreate(){
         if(this.dataEntrada == null){
             this.dataEntrada = LocalDate.now();

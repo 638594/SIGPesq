@@ -37,6 +37,7 @@ public class VinculoFinanciamentoService {
 
         vinculoFinanciamento.setProject(projeto);
         vinculoFinanciamento.setFinanciamento(financiamento);
+        
 
         return vinculoFinanciamentoRepository.save(vinculoFinanciamento);
     }

@@ -1,9 +1,13 @@
 package com.SIGPesq.SIGPesq.service;
 import com.SIGPesq.SIGPesq.entity.Participant;
 import com.SIGPesq.SIGPesq.entity.Project;
+import com.SIGPesq.SIGPesq.entity.Vinculo;
+import com.SIGPesq.SIGPesq.enums.Tipos;
 import com.SIGPesq.SIGPesq.repository.ParticipantRepository;
 import com.SIGPesq.SIGPesq.repository.ProjectRepository;
+import com.SIGPesq.SIGPesq.repository.VinculoRepository;
 import jakarta.persistence.EntityNotFoundException;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -19,8 +23,10 @@ public class ProjectService {
 
     private final ParticipantRepository participantRepository;
     private final ProjectRepository projectRepository;
+    private final VinculoRepository vinculoRepository;
 
-    public Project postProject(Project project){
+    @Transactional
+    public Project postProject(Project project, String coordenador_cpf){
         //Validacao data termino
         LocalDate hoje = LocalDate.now();
         if(project.getDataTermino() != null && project.getDataTermino().isBefore(hoje)){
@@ -33,17 +39,28 @@ public class ProjectService {
                     "Não foi possivel criar o projeto: o código " + project.getCodProjeto() + " ja esta em uso."
             );
         }
-        if(project.getCoordenador() == null || project.getCoordenador().getCpf() == null){
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Todo projeto deve ter um coordenador principal.");
-        }
-        Participant coordenador = participantRepository.findById(project.getCoordenador().getCpf())
-                .orElseThrow(()-> new ResponseStatusException(HttpStatus.NOT_FOUND, "Coordenador não encontrado no sistema."));
+        Participant coordenador = participantRepository.findById(coordenador_cpf)
+                .orElseThrow(()-> new ResponseStatusException(HttpStatus.NOT_FOUND, "Participante nao encontrado"));
 
-        if(!"DOCENTE".equalsIgnoreCase(String.valueOf(coordenador.getTipo()))){
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST,"Apenas participantes do tipo DOCENTE podem coordenar projetos.");
+        if(!Tipos.DOCENTE.equals((coordenador.getTipo()))){
+            throw new ResponseStatusException(
+                    HttpStatus.BAD_REQUEST,
+                    "Apenas participantes do tipo DOCENTE podem coordenador projetos."
+            );
         }
+        //1. Salva o projeto primeiro
+        Project projetoSalvo = projectRepository.save(project);
 
-        return projectRepository.save(project);
+        //2. Cria vinculo
+
+        Vinculo vinculoCoordenador = new Vinculo();
+        vinculoCoordenador.setProject(projetoSalvo);
+        vinculoCoordenador.setParticipant(coordenador);
+        vinculoCoordenador.setFuncao("Coordenador");
+        vinculoCoordenador.setDataEntrada(LocalDate.now());
+
+        vinculoRepository.save(vinculoCoordenador);
+        return  projetoSalvo;
     }
 
     public List<Project> getAllProjects(){
@@ -71,12 +88,16 @@ public class ProjectService {
             existingProject.setDataTermino(project.getDataTermino());
             existingProject.setSituacao(project.getSituacao());
 
-            if(project.getCoordenador() != null){
-                existingProject.setCoordenador(project.getCoordenador());
-            }
+//            if(project.getCoordenador() != null){
+//                existingProject.setCoordenador(project.getCoordenador());
+//            }
 
             return projectRepository.save(existingProject);
         }
         return null;
+    }
+
+    public List<Project> searchProject(String termo){
+        return projectRepository.searchByTituloOuNomeCoordenador(termo);
     }
 }

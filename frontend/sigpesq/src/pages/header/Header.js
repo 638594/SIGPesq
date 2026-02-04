@@ -24,22 +24,28 @@ const Header = () => {
                   Participants
                 </NavLink>
                 <NavLink as={Link} to="/participant" className="nav-link">
-                  Post Participant
+                  Criar Participante
+                </NavLink>
+                <NavLink as={Link} to="/producoes/consulta-ano" className="nav-link">
+                  Consultar Produção por Ano
                 </NavLink>
               </>
             ) : (
               <>
                 <NavLink as={Link} to="/projects" className="nav-link">
-                  Projects
+                  Projetos
                 </NavLink>
                 <NavLink as={Link} to="/project" className="nav-link">
-                  Post Projects
+                  Criar Projetos
                 </NavLink>
                 <NavLink as={Link} to="/financiamentos" className="nav-link">
                   Financiamentos
                 </NavLink>
                 <NavLink as={Link} to="/financiamento" className="nav-link">
-                  Post Financiamentos
+                  Criar Financiamentos
+                </NavLink>
+                  <NavLink as={Link} to="/producoes/consulta-ano" className="nav-link">
+                  Consultar Produção por Ano
                 </NavLink>
               </>
             )}

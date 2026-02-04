@@ -21,12 +21,15 @@ public class ProjectController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public Project postProject(@RequestBody Project project) {
-        return projectService.postProject(project);
+    public Project postProject(@RequestBody Project project, @RequestParam String coordenador_cpf) {
+        return projectService.postProject(project,  coordenador_cpf);
     }
 
     @GetMapping
-    public List<Project> getAllProjects() {
+    public List<Project> getAllProjects(@RequestParam(required = false) String termo) {
+        if(termo != null && !termo.isEmpty()){
+            return projectService.searchProject(termo);
+        }
         return projectService.getAllProjects();
     }
 
