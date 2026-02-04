@@ -20,6 +20,7 @@ public class Financiamento {
 
     private String agenciaFinanciadora;
 
+    @Enumerated(EnumType.STRING)
     private String tipoFomento;
 
     private Long valorTotal;
