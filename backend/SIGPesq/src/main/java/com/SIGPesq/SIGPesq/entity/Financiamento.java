@@ -1,5 +1,6 @@
 package com.SIGPesq.SIGPesq.entity;
 
+import com.SIGPesq.SIGPesq.enums.TipoFomento;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
@@ -21,7 +22,7 @@ public class Financiamento {
     private String agenciaFinanciadora;
 
     @Enumerated(EnumType.STRING)
-    private String tipoFomento;
+    private TipoFomento tipoFomento;
 
     private Long valorTotal;
 

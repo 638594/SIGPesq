@@ -10,7 +10,7 @@ import { useNavigate } from "react-router-dom"
         const [formData, setFormData] = useState({
             // definir os campos do formulário aqui
             agenciaFinanciadora: "",
-            tipoFomento: "",
+            tipoFomento: "BOLSA",
             valorTotal: "",
             dataTermino: ""
         })
@@ -85,21 +85,24 @@ import { useNavigate } from "react-router-dom"
                     </FloatingLabel>
                 </Form.Group>
 
-                <Form.Group>
+                
                     <FloatingLabel
                         controlId="floatingTipoFomento"
                         label="Tipo de Fomento"
                         className="mb-3"
                     >
-                        <Form.Control
-                            type="text"
+                        <Form.Select
                             name="tipoFomento"
-                            placeholder="Digite o tipo de fomento"
                             value={formData.tipoFomento}
                             onChange={handleInputChange}
-                        />
+                        >
+                            <option value="BOLSA">Bolsa</option>
+                            <option value="AUXILIO">Auxilio</option>
+                            <option value="CONVENIO">Convenio</option>
+                            
+                        </Form.Select>
                     </FloatingLabel>
-                </Form.Group>
+                
 
                 <Form.Group controlId="formValorTotal">
                     <FloatingLabel

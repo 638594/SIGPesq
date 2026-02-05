@@ -87,7 +87,7 @@ import { useNavigate, useParams } from "react-router-dom"
                                     name="dataTermino"
                                     value={financiamento.dataTermino}
                                     onChange={handleInputChange}
-                                    required
+                                    
                                 />
                             </Form.Group>
 
