@@ -140,10 +140,13 @@ const UpdateProject = () => {
                         </Form.Select>
                     </FloatingLabel>
 
-
-                    <Button variant="primary" type="submit" className="w-100 mt-3">
+                    <div className="d-grid gap-2">
+                        <Button variant="primary" type="submit" className="w-100 mt-3">
                         Editar Projeto
                     </Button>
+                    <Button variant="secondary" onClick={()=> navigate("/projects")}>Cancelar</Button>
+                    </div>
+                    
                 </Form>
             </div>
         </>

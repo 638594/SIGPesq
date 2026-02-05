@@ -29,6 +29,11 @@ const PostParticipant = () => {
 
         console.log(formData);
 
+        if(formData.cpf.length !== 11){
+            alert("CPF deve conter 11 digitos.");
+            return;
+        }
+
         try {
             const response = await fetch("http://localhost:8080/api/participants",{
                 method:"POST",
@@ -63,7 +68,12 @@ const PostParticipant = () => {
                                 placeholder="Digite o cpf"
                                 value={formData.cpf}
                                 onChange={handleInputChange}
+                                maxLength={11}
+                                isInvalid={formData.cpf && formData.cpf.length !== 11}
                             />
+                            <Form.Control.Feedback type="invalid">
+                                CPF deve conter 11 digitos.
+                            </Form.Control.Feedback>
                         </FloatingLabel>
                     </Form.Group>
 

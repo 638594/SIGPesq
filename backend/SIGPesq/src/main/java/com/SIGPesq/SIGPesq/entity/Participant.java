@@ -15,6 +15,7 @@ import java.util.List;
 public class Participant {
 
     @Id
+    @Column(name = "cpf", columnDefinition = "CHAR(11)", nullable = false, length = 11, unique = true)
     private String cpf;
 
     private String nome;
