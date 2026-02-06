@@ -54,7 +54,7 @@ const PostParticipant = () => {
     return (
         <>
             <div className="center-form">
-                <h1>Post New Participant</h1>
+                <h1>Adcionar Novo Participante</h1>
                 <Form onSubmit={handleSubmit}>
                     <Form.Group controlId="formcpf">
                         <FloatingLabel

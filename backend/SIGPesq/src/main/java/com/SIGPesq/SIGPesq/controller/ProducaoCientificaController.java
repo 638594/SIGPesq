@@ -60,7 +60,7 @@ public class ProducaoCientificaController {
     }
 
     @GetMapping
-    public List<ProducaoCientifica> list(@RequestParam Long anoPublicacao){
+    public List<ProducaoCientifica> list(@RequestParam(required = false) Long anoPublicacao){
         if(anoPublicacao != null){
             return producaoCientificaService.getByAnoPublicacao(anoPublicacao);
         }

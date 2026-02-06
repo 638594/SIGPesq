@@ -20,6 +20,10 @@ const Header = () => {
           <Nav className="ml-auto">
             {isParticipantPage ? (
               <>
+                <NavLink as={Link} to="/producao" className="nav-link">
+                Criar producao</NavLink>
+                <NavLink as={Link} to="/producoes" className="nav-link">
+                Producoes</NavLink>
                 <NavLink as={Link} to="/participants" className="nav-link">
                   Participants
                 </NavLink>
@@ -32,6 +36,16 @@ const Header = () => {
               </>
             ) : (
               <>
+              <NavLink as={Link} to="/participants" className="nav-link">
+                  Participants
+                </NavLink>
+                <NavLink as={Link} to="/participant" className="nav-link">
+                  Criar Participante
+                </NavLink>
+                <NavLink as={Link} to="/producao" className="nav-link">
+                Criar producao</NavLink>
+                <NavLink as={Link} to="/producoes" className="nav-link">
+                Producoes</NavLink>
                 <NavLink as={Link} to="/projects" className="nav-link">
                   Projetos
                 </NavLink>

@@ -25,7 +25,7 @@ public class Vinculo {
 
     @ManyToOne
     @JoinColumn(name = "participant_id", nullable = false)
-    private Participant participant;
+    private Participante participante;
 
     private String funcao;
 

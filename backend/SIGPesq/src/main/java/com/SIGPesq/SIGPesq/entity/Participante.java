@@ -12,7 +12,7 @@ import java.util.List;
 @Entity
 @Data
 @NoArgsConstructor
-public class Participant {
+public class Participante {
 
     @Id
     @Column(name = "cpf", columnDefinition = "CHAR(11)", nullable = false, length = 11, unique = true)
@@ -25,7 +25,7 @@ public class Participant {
     @Enumerated(EnumType.STRING)
     private Tipos tipo;
 
-    @OneToMany(mappedBy = "participant", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "participante", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonIgnore
     private List<Vinculo> vinculos;
 

@@ -14,7 +14,7 @@ public interface ProjectRepository extends JpaRepository<Project, String> {
     @Query("SELECT DISTINCT p FROM Project p " +
             "LEFT JOIN p.vinculos v " +
             "WHERE LOWER(p.titulo) LIKE LOWER(CONCAT('%', :termo, '%')) " +
-            "OR (LOWER(v.participant.nome) LIKE LOWER(CONCAT('%', :termo, '%')) " +
+            "OR (LOWER(v.participante.nome) LIKE LOWER(CONCAT('%', :termo, '%')) " +
             "AND v.funcao = 'Coordenador')")
     List<Project> searchByTituloOuNomeCoordenador(@Param("termo") String termo);
 }

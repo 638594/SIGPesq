@@ -1,9 +1,9 @@
 package com.SIGPesq.SIGPesq.service;
-import com.SIGPesq.SIGPesq.entity.Participant;
+import com.SIGPesq.SIGPesq.entity.Participante;
 import com.SIGPesq.SIGPesq.entity.Project;
 import com.SIGPesq.SIGPesq.entity.Vinculo;
 import com.SIGPesq.SIGPesq.enums.Tipos;
-import com.SIGPesq.SIGPesq.repository.ParticipantRepository;
+import com.SIGPesq.SIGPesq.repository.ParticipanteRepository;
 import com.SIGPesq.SIGPesq.repository.ProjectRepository;
 import com.SIGPesq.SIGPesq.repository.VinculoRepository;
 import jakarta.persistence.EntityNotFoundException;
@@ -21,7 +21,7 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class ProjectService {
 
-    private final ParticipantRepository participantRepository;
+    private final ParticipanteRepository participanteRepository;
     private final ProjectRepository projectRepository;
     private final VinculoRepository vinculoRepository;
 
@@ -39,7 +39,7 @@ public class ProjectService {
                     "Não foi possivel criar o projeto: o código " + project.getCodProjeto() + " ja esta em uso."
             );
         }
-        Participant coordenador = participantRepository.findById(coordenador_cpf)
+        Participante coordenador = participanteRepository.findById(coordenador_cpf)
                 .orElseThrow(()-> new ResponseStatusException(HttpStatus.NOT_FOUND, "Participante nao encontrado"));
 
         if(!Tipos.DOCENTE.equals((coordenador.getTipo()))){
@@ -55,7 +55,7 @@ public class ProjectService {
 
         Vinculo vinculoCoordenador = new Vinculo();
         vinculoCoordenador.setProject(projetoSalvo);
-        vinculoCoordenador.setParticipant(coordenador);
+        vinculoCoordenador.setParticipante(coordenador);
         vinculoCoordenador.setFuncao("Coordenador");
         vinculoCoordenador.setDataEntrada(LocalDate.now());
 

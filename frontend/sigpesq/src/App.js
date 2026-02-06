@@ -13,6 +13,9 @@ import AllProjects from './pages/project/AllProjects';
 import AllFinanciamentos from './pages/financiamento/AllFinanciamentos';
 import SearchProducaoCientificaByAnoPublicacao from './pages/producaoCientifica/SearchProducaoCientificaByAnoPublicacao';
 import UpdateFinanciamento from './pages/financiamento/UpdateFinanciamento';
+import PostProducaoCientifica from './pages/producaoCientifica/PostProducaoCientifica';
+import AllProducaoCientifica from './pages/producaoCientifica/AllProducaoCientifica';
+import Home from './pages/dashboard/Home';
 
 
 function App() {
@@ -20,6 +23,9 @@ function App() {
     <>
       <Header/>
       <Routes>
+        <Route path='/' element={<Home/>}/>
+        <Route path='/producoes' element={<AllProducaoCientifica/>}/>
+        <Route path='/producao' element={<PostProducaoCientifica/>}/>
         <Route path='/financiamentos/:id' element={<UpdateFinanciamento/>}/>
         <Route path='/producoes/consulta-ano' element={<SearchProducaoCientificaByAnoPublicacao/>}/>
         <Route path='/financiamento' element={<PostFinanciamento/>}/>

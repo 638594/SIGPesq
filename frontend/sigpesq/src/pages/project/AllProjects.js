@@ -65,7 +65,7 @@ const AllProjects = () => {
         <Container className="mt-5">
             <Row>
                 <Col>
-                    <h1 className="text-center">Projects</h1>
+                    <h1 className="text-center">Projetos</h1>
 
                     {/*Barra de pesquisa */}
                     <InputGroup>

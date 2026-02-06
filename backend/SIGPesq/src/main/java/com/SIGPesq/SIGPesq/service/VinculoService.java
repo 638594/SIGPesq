@@ -1,9 +1,9 @@
 package com.SIGPesq.SIGPesq.service;
 
-import com.SIGPesq.SIGPesq.entity.Participant;
+import com.SIGPesq.SIGPesq.entity.Participante;
 import com.SIGPesq.SIGPesq.entity.Project;
 import com.SIGPesq.SIGPesq.entity.Vinculo;
-import com.SIGPesq.SIGPesq.repository.ParticipantRepository;
+import com.SIGPesq.SIGPesq.repository.ParticipanteRepository;
 import com.SIGPesq.SIGPesq.repository.ProjectRepository;
 import com.SIGPesq.SIGPesq.repository.VinculoRepository;
 import lombok.RequiredArgsConstructor;
@@ -19,7 +19,7 @@ public class VinculoService {
 
     private final VinculoRepository vinculoRepository;
     private final ProjectRepository projectRepository;
-    private final ParticipantRepository  participantRepository;
+    private final ParticipanteRepository participanteRepository;
 
     public Vinculo postVinculo(Vinculo vinculo){
         // Se o JSON vier errado, o vinculo.getProject() será null
@@ -30,7 +30,7 @@ public class VinculoService {
         Project projeto = projectRepository.findById(vinculo.getProject().getCodProjeto())
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Projeto nao encontrado."));
         // 2. Validar se o Participante existe
-        Participant participante = participantRepository.findById(vinculo.getParticipant().getCpf())
+        Participante participante = participanteRepository.findById(vinculo.getParticipante().getCpf())
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Participante nao encontrado."));
         if(projeto.getDataTermino() != null && vinculo.getDataEntrada().isAfter(projeto.getDataTermino())) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST,
@@ -38,7 +38,7 @@ public class VinculoService {
         }
 
         vinculo.setProject(projeto);
-        vinculo.setParticipant(participante);
+        vinculo.setParticipante(participante);
 
         return vinculoRepository.save(vinculo);
     }

@@ -130,8 +130,8 @@ const ProjectTeam = () => {
                     {team.map((v) => (
                         <tr key={v.id}>
                             {/* O nome e CPF estão dentro do objeto participante vinculado */}
-                            <td>{v.participant?.nome}</td>
-                            <td>{v.participant?.cpf}</td>
+                            <td>{v.participante?.nome}</td>
+                            <td>{v.participante?.cpf}</td>
 
                             {/* A função e data estão na raiz do vínculo */}
                             <td>{v.funcao}</td>
